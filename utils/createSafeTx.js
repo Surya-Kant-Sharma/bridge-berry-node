@@ -29,11 +29,26 @@ const ABI = [
   },
 ];
 
+// Avax : 106
+// Base : 184
+// polygon : 109
+// Airbitrum : 110
+
+// const getChainId = (chain) => {
+//     switch (chain) {
+//         case 184 :
+//             return  ;
+
+//         case 184 :
+//             return : "";
+//     }
+// }
+
 const getRpc = (chainId) => {
-  if (chainId == "") {
-    return "";
-  } else if (chainId == "") {
-    return "";
+  if (chainId == 184) {
+    return process.env.Base_RPC;
+  } else if (chainId == 110) {
+    return process.env.Airbitrum_RPC;
   }
 };
 
@@ -45,4 +60,11 @@ export const createTransaction = async (chainId, contractAddress, data) => {
   const contract = ethers.Contract(contractAddress, Contract.ABI, signer);
   const hash = await contract.execTransaction(data);
   return hash;
+};
+
+export const waitForTransaction = async (chianId, hash) => {
+  const rpc = getRpc(chianId);
+  const provider = ethers.JsonRpcProvider(rpc);
+  const wait = await provider.waitForTransaction(hash);
+  return wait;
 };

@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import { getLayerZeroStatus } from "./utils/layerzeroStatus.js";
 import dotenv from "dotenv";
+import { createTransaction, waitForTransaction } from "./utils/createSafeTx.js";
 dotenv.config();
 
 const app = express();
@@ -54,6 +55,7 @@ const startBarryProccess = async (req) => {
       );
 
       //   if (message?.desChainId || message?.txHash)
+      //   await waitForTransaction(message?.desChainId, message?.txHash);
       // createTransaction(
       //   isValid?.desChainId,
       //   isValid?.isSmartWalletDepoly,
