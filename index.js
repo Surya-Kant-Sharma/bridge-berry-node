@@ -1,25 +1,16 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { getLayerZeroStatus } from "./utils/layerzeroStatus.js";
-// import { createTransaction } from "./utils/createSafeTx.js";
+import dotenv from "dotenv";
+dotenv.config();
+
 const app = express();
 
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.json({ data: "hey" });
+  res.json({ data: "I'm running..." });
 });
-
-// bytes memory signature;
-// targetWallet;
-// targetChain;
-// srcHash;
-// srcChain;
-// isSmartWalletDeployed
-// if false -> smartWalletDeploymentData
-// // if smart wallet deployed
-// // condition -> execute as soon as the token bridge is complete
-// // executeIntent(bundledIntent, signature);
 
 const checkValidator = (request) => {
   const {
