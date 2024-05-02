@@ -34,16 +34,6 @@ const ABI = [
 // polygon : 109
 // Airbitrum : 110
 
-// const getChainId = (chain) => {
-//     switch (chain) {
-//         case 184 :
-//             return  ;
-
-//         case 184 :
-//             return : "";
-//     }
-// }
-
 const getRpc = (chainId) => {
   if (chainId == 184) {
     return process.env.Base_RPC;
@@ -58,7 +48,18 @@ export const createTransaction = async (chainId, contractAddress, data) => {
   const key = proccess.env.Key;
   const signer = new ethers.Wallet(key, provider);
   const contract = ethers.Contract(contractAddress, Contract.ABI, signer);
-  const hash = await contract.execTransaction(data);
+  const hash = await contract.execTransaction(
+    data?.to,
+    data?.value,
+    data?.data,
+    data?.operation,
+    data?.safeTxGas,
+    data?.baseGas,
+    data?.gasPrice,
+    data?.gasToken,
+    data?.refundReceiver,
+    data?.signatures
+  );
   return hash;
 };
 

@@ -46,21 +46,18 @@ const checkValidator = (request) => {
 
 const startBarryProccess = async (req) => {
   try {
-    const isValid = checkValidator(req?.body);
+    const data = checkValidator(req?.body);
 
-    if (isValid) {
-      const message = await getLayerZeroStatus(
-        isValid?.srcChain,
-        isValid?.srcHash
-      );
+    if (data) {
+      const message = await getLayerZeroStatus(data?.srcChain, data?.srcHash);
 
       //   if (message?.desChainId || message?.txHash)
-      //   await waitForTransaction(message?.desChainId, message?.txHash);
-      // createTransaction(
-      //   isValid?.desChainId,
-      //   isValid?.isSmartWalletDepoly,
-      //   isValid?.smartContractData
-      // );
+      //     await waitForTransaction(message?.desChainId, message?.txHash);
+      //   createTransaction(
+      //     data?.desChainId,
+      //     data?.safeAddress,
+      //     data?.smartContractData?.data
+      //   );
 
       // return message;
       return message || "Transaction Failed";
@@ -73,9 +70,9 @@ const startBarryProccess = async (req) => {
 };
 
 app.post("/bridge", async (req, res) => {
-  const isValid = await startBarryProccess(req);
-  console.log("received data", isValid);
-  if (isValid) res.json({ isValid });
+  const data = await startBarryProccess(req);
+  console.log("received data", data);
+  if (data) res.json({ data });
   else res.json({ error: "please provide all feilds" });
 });
 
